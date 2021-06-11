@@ -1,0 +1,4 @@
+Sadness:troll:1
+Rage:troll:1
+Incident:trollge:1
+Redemption:troll:1
