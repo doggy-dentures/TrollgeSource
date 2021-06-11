@@ -27,6 +27,8 @@ class Credits extends MusicBeatState
 		"Press Enter to continue"
 	];
 
+	var pressEnter:Bool = false;
+
 	override function create()
 	{
 		testText = new FlxText(860, 500, 0, diffCredits[0], 12);
@@ -68,13 +70,10 @@ class Credits extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (controls.ACCEPT)
+		if (controls.ACCEPT && pressEnter)
 		{
-			if (testText.text == "Press Enter to continue")
-			{
-				FlxG.sound.play(Paths.sound('confirmMenu'));
-				FlxG.switchState(new TCF());
-			}
+			FlxG.sound.play(Paths.sound('confirmMenu'));
+			FlxG.switchState(new TCF());
 		}
 		super.update(elapsed);
 
@@ -103,7 +102,14 @@ class Credits extends MusicBeatState
 					}
 					else
 					{
-						loopOtherStuff();
+						if (testText.text != "Press Enter to continue")
+						{
+							loopOtherStuff();
+						}
+						else
+						{
+							pressEnter = true;
+						}
 					}
 				});
 			}
