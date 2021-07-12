@@ -1,5 +1,6 @@
 package;
 
+import flixel.system.FlxAssets.FlxShader;
 import Controls.KeyboardScheme;
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -14,7 +15,6 @@ import flixel.util.FlxColor;
 import io.newgrounds.NG;
 import lime.app.Application;
 import flixel.util.FlxTimer;
-
 #if windows
 import Discord.DiscordClient;
 #end
@@ -25,7 +25,8 @@ class MainMenuState extends MusicBeatState
 {
 	var curSelected:Int = 0;
 
-	var menuItems:FlxTypedGroup<FlxSprite>;
+	// var menuItems:FlxTypedGroup<FlxSprite>;
+	var menuItems:FlxTypedGroup<FlxText>;
 
 	#if !switch
 	var optionShit:Array<String> = ['story mode', 'options', 'donate'];
@@ -41,7 +42,6 @@ class MainMenuState extends MusicBeatState
 	var bg2:FlxSprite = new FlxSprite(-80);
 	var bg3:FlxSprite = new FlxSprite(-80);
 	var caso:Bool = false;
-	
 
 	public static var nightly:String = "";
 
@@ -49,7 +49,8 @@ class MainMenuState extends MusicBeatState
 	public static var gameVer:String = "   ";
 
 	var magenta:FlxSprite;
-	//var camFollow:FlxObject;
+
+	// var camFollow:FlxObject;
 
 	override function create()
 	{
@@ -58,12 +59,8 @@ class MainMenuState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-	
-
 		persistentUpdate = persistentDraw = true;
 
-
-		
 		bg.frames = Paths.getSparrowAtlas('frames/sheeto');
 		bg.animation.addByPrefix('n', 'n', 24);
 		bg.animation.play('n');
@@ -72,7 +69,6 @@ class MainMenuState extends MusicBeatState
 		bg.screenCenter();
 		add(bg);
 
-		
 		bg0.frames = Paths.getSparrowAtlas('frames/sheeto2');
 		bg0.animation.addByPrefix('n', 'n', 24);
 		bg0.animation.play('n');
@@ -96,8 +92,8 @@ class MainMenuState extends MusicBeatState
 		bg3.screenCenter();
 		add(bg3);
 
-		//camFollow = new FlxObject(0, 0, 1, 1);
-		//add(camFollow);
+		// camFollow = new FlxObject(0, 0, 1, 1);
+		// add(camFollow);
 
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		magenta.scrollFactor.x = 0;
@@ -111,19 +107,32 @@ class MainMenuState extends MusicBeatState
 		add(magenta);
 		// magenta.scrollFactor.set();
 
-		menuItems = new FlxTypedGroup<FlxSprite>();
+		menuItems = new FlxTypedGroup<FlxText>();
 		add(menuItems);
 
 		var tex = Paths.getSparrowAtlas('FNF_main_menu_assets');
 
 		for (i in 0...optionShit.length)
 		{
-			var menuItem:FlxSprite = new FlxSprite(0, 250 + (i * 80)); //i*n = tamanho entre eles
-			menuItem.frames = tex;
-			menuItem.scale.set(0.75, 0.75);
-			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
-			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
-			menuItem.animation.play('idle');
+			// var menuItem:FlxSprite = new FlxSprite(0, 250 + (i * 80)); //i*n = tamanho entre eles
+			var menuItem:FlxText = new FlxText();
+			switch (i)
+			{
+				case 0:
+					menuItem.text = "ケース";
+				case 1:
+					menuItem.text = "設定";
+				case 2:
+					menuItem.text = "クレジット";
+			}
+			menuItem.setFormat(Paths.font("dot16.ttf"), 96, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			menuItem.y = FlxG.height / 4 + 96 * 1.5 * i;
+
+			// menuItem.frames = tex;
+			// menuItem.scale.set(0.75, 0.75);
+			// menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
+			// menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
+			// menuItem.animation.play('idle');
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
@@ -131,12 +140,9 @@ class MainMenuState extends MusicBeatState
 			menuItem.antialiasing = true;
 		}
 
-		//FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
-
-		
+		// FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
 		// NG.core.calls.event.logEvent('swag').send();
-
 
 		if (FlxG.save.data.dfjk)
 			controls.setKeyboardScheme(KeyboardScheme.Solo, true);
@@ -153,39 +159,38 @@ class MainMenuState extends MusicBeatState
 	function glitch():Void
 	{
 		new FlxTimer().start(0.25, function(swagTimer:FlxTimer)
-			{
-				bg2.alpha -= 0.001; //timer
-				if (bg2.alpha > 0)
-					swagTimer.reset();
-				else
-				{
-					caso = true;
-				}
-			});
-	}
-	function glitch2():Void
 		{
-			new FlxTimer().start(0.25, function(swagTimer:FlxTimer)
-				{
-					bg2.alpha += 0.001; //timer
-					if (bg2.alpha < 0.3)
-						swagTimer.reset();
-					else
-					{
-						caso = false;
-					}
-				});
-		}
+			bg2.alpha -= 0.001; // timer
+			if (bg2.alpha > 0)
+				swagTimer.reset();
+			else
+			{
+				caso = true;
+			}
+		});
+	}
+
+	function glitch2():Void
+	{
+		new FlxTimer().start(0.25, function(swagTimer:FlxTimer)
+		{
+			bg2.alpha += 0.001; // timer
+			if (bg2.alpha < 0.3)
+				swagTimer.reset();
+			else
+			{
+				caso = false;
+			}
+		});
+	}
 
 	override function update(elapsed:Float)
 	{
-		
-
-		if(caso == false)
-		{	
+		if (caso == false)
+		{
 			glitch();
 		}
-		if(caso == true)
+		if (caso == true)
 		{
 			glitch2();
 		}
@@ -252,7 +257,6 @@ class MainMenuState extends MusicBeatState
 										FlxG.switchState(new OptionsMenu());
 									case 'donate':
 										FlxG.switchState(new AboutThisShit());
-										
 								}
 							});
 						}
@@ -263,9 +267,18 @@ class MainMenuState extends MusicBeatState
 
 		super.update(elapsed);
 
-		menuItems.forEach(function(spr:FlxSprite)
+		// menuItems.forEach(function(spr:FlxSprite)
+		// {
+		// 	spr.screenCenter(X);
+		// });
+
+		menuItems.forEach(function(spr:FlxText)
 		{
-			spr.screenCenter(X);
+			if (spr.ID == curSelected)
+			{
+				spr.screenCenter(X);
+				spr.x += FlxG.random.float(-8, 8);
+			}
 		});
 	}
 
@@ -278,14 +291,18 @@ class MainMenuState extends MusicBeatState
 		if (curSelected < 0)
 			curSelected = menuItems.length - 1;
 
-		menuItems.forEach(function(spr:FlxSprite)
+		menuItems.forEach(function(spr:FlxText)
 		{
-			spr.animation.play('idle');
+			// spr.animation.play('idle');
+
+			spr.setFormat(spr.font, spr.size, FlxColor.WHITE, spr.alignment, spr.borderStyle, spr.borderColor, spr.embedded);
+			spr.screenCenter(X);
 
 			if (spr.ID == curSelected)
 			{
-				spr.animation.play('selected');
-				//camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
+				// spr.animation.play('selected');
+				// camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
+				spr.setFormat(spr.font, spr.size, FlxColor.YELLOW, spr.alignment, spr.borderStyle, spr.borderColor, spr.embedded);
 			}
 
 			spr.updateHitbox();

@@ -106,7 +106,7 @@ class TitleState extends MusicBeatState
 		add(loadingDone);
 
 		loadTxt = new FlxText(0, 0, 0, "initialized game", 30);
-		loadTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		loadTxt.setFormat(Paths.font("pixelmplus12.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 		loadTxt.screenCenter(X);
 		loadTxt.alignment = RIGHT;
 		loadTxt.y = 600;
@@ -485,11 +485,11 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
 			case 13:
-				addMoreText('Turn off');
+				addMoreText('点滅は');
 			case 14:
-				addMoreText('Photosensitive stuff');
+				addMoreText('設定で');
 			case 15:
-				addMoreText('In settings');
+				addMoreText('オフにできる');
 
 			case 16:
 				skipIntro();

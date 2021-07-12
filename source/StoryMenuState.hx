@@ -56,7 +56,8 @@ class StoryMenuState extends MusicBeatState
 	
 	var sprDifficulty:FlxSprite;
 	var yellowBG:FlxSprite = new FlxSprite(0, 0);
-	var cases:FlxSprite = new FlxSprite(0, 0);
+	//var cases:FlxSprite = new FlxSprite(0, 0);
+	var casesbleh:FlxText = new FlxText();
 
 
 	override function create()
@@ -104,9 +105,16 @@ class StoryMenuState extends MusicBeatState
 		
 
 
-		cases.loadGraphic(Paths.image('case'));
-		add(cases);
-		
+		// cases.loadGraphic(Paths.image('case'));
+		// add(cases);
+		casesbleh.text = "Trollgeケース２３";
+		casesbleh.setFormat(Paths.font("dot16.ttf"), 96, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		casesbleh.screenCenter(XY);
+		add(casesbleh);
+		var bleh2:FlxText = new FlxText(0,casesbleh.y + 96*3,"スタート");
+		bleh2.setFormat(Paths.font("dot16.ttf"), 32, FlxColor.GRAY, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		bleh2.screenCenter(X);
+		add(bleh2);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
@@ -242,7 +250,8 @@ class StoryMenuState extends MusicBeatState
 			{
 				
 				letter.alpha = 1;
-				cases.alpha = 0;
+				// cases.alpha = 0;
+				casesbleh.alpha = 0;
 				sapo = true;
 				
 			}

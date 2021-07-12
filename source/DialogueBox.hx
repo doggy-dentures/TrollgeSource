@@ -354,7 +354,7 @@ class DialogueBox extends FlxSpriteGroup
 		beep = new FlxSound().loadEmbedded(Paths.sound('beep'));
 
 		swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
-		swagDialogue.font = 'VCR OSD Mono';
+		swagDialogue.font = 'PixelMplus12 Regular';
 		swagDialogue.color = 0xFFFFFFFF;
 		add(swagDialogue);
 
